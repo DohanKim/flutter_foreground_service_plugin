@@ -346,4 +346,15 @@ public class FlutterForegroundService extends Service implements MethodChannel.M
                 break;
         }
     }
+
+    @Override
+    public void onTaskRemoved(Intent rootIntent){
+        action = STOP_SERVICE;
+
+        stopPeriodicTask();
+        stopForeground(true);
+        stopSelf();
+    
+        super.onTaskRemoved(rootIntent);
+    }
 }

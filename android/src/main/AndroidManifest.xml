@@ -20,6 +20,7 @@
             android:name=".FlutterForegroundService"
             android:enabled="true"
             android:exported="true"
+            android:stopWithTask="false"
             tools:node="replace" />
     </application>
 
