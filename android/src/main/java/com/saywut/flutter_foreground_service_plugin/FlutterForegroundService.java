@@ -298,33 +298,33 @@ public class FlutterForegroundService extends Service implements MethodChannel.M
         // this is to check if the service got stopped by the system
         // if it is then restart it
         // you can read farther explanation in the RestartForegroundService class
-        if (!action.equals(STOP_SERVICE))
-        {
-            if (taskTimer != null)
-            {
-                // if the task is running and the OS kills the service the task is stopped
-                // this is to calculate the task delay on restart to continue from where it stopped
-                long serviceStopTime = System.currentTimeMillis();
-                long taskDelay = preferencesHandler.get("taskDelay");
-                long taskPeriod = preferencesHandler.get("taskPeriod");
+        // if (!action.equals(STOP_SERVICE))
+        // {
+        //     if (taskTimer != null)
+        //     {
+        //         // if the task is running and the OS kills the service the task is stopped
+        //         // this is to calculate the task delay on restart to continue from where it stopped
+        //         long serviceStopTime = System.currentTimeMillis();
+        //         long taskDelay = preferencesHandler.get("taskDelay");
+        //         long taskPeriod = preferencesHandler.get("taskPeriod");
 
-                long passedTaskTimeFromStart = serviceStopTime - taskStartTime;
-                long passedTaskTimeFromDelay = taskDelay - passedTaskTimeFromStart;
+        //         long passedTaskTimeFromStart = serviceStopTime - taskStartTime;
+        //         long passedTaskTimeFromDelay = taskDelay - passedTaskTimeFromStart;
 
-                long passedTaskTimeFromLast = serviceStopTime - lastTimeTaskExecute;
-                long passedTaskTimeFromPeriod = taskPeriod - passedTaskTimeFromLast;
+        //         long passedTaskTimeFromLast = serviceStopTime - lastTimeTaskExecute;
+        //         long passedTaskTimeFromPeriod = taskPeriod - passedTaskTimeFromLast;
 
-                long restartServiceTaskDelay = passedTaskTimeFromDelay >= 0 ? passedTaskTimeFromDelay : passedTaskTimeFromPeriod;
-                restartServiceTaskDelay = Math.max(restartServiceTaskDelay, 0);
+        //         long restartServiceTaskDelay = passedTaskTimeFromDelay >= 0 ? passedTaskTimeFromDelay : passedTaskTimeFromPeriod;
+        //         restartServiceTaskDelay = Math.max(restartServiceTaskDelay, 0);
 
-                preferencesHandler.put("taskDelay", restartServiceTaskDelay);
-                preferencesHandler.apply();
-            }
+        //         preferencesHandler.put("taskDelay", restartServiceTaskDelay);
+        //         preferencesHandler.apply();
+        //     }
 
-            Intent restartForegroundServiceReceiver = new Intent(this, ForegroundServiceReceiver.class);
-            restartForegroundServiceReceiver.setAction(RESTART_FOREGROUND_SERVICE_ACTION);
-            sendBroadcast(restartForegroundServiceReceiver);
-        }
+        //     Intent restartForegroundServiceReceiver = new Intent(this, ForegroundServiceReceiver.class);
+        //     restartForegroundServiceReceiver.setAction(RESTART_FOREGROUND_SERVICE_ACTION);
+        //     sendBroadcast(restartForegroundServiceReceiver);
+        // }
 
         stopPeriodicTask();
     }
